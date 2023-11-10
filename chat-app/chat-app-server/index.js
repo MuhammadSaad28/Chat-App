@@ -1,4 +1,5 @@
 const express = require('express');
+const serverless = require('serverless-http')
 const cors = require('cors');
 const mongoose = require('mongoose');
 const socket = require('socket.io');
@@ -10,8 +11,8 @@ app.use(express.json());
 require('dotenv').config();
 port = process.env.PORT;
 app.use(cors());
-app.use("/api/auth" , userRoutes)
-app.use("/api/messages" , msgRoutes)
+app.use("/.netlify/functions/api/auth" , userRoutes)
+app.use("/.netlify/functions/api/messages" , msgRoutes)
 
 
 
@@ -49,3 +50,4 @@ io.on("connection",(socket)=>{
         }
     })
 })
+module.exports.handler = serverless(app);
